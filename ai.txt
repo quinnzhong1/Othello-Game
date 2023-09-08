@@ -1,0 +1,32 @@
+Computer AI Design for Othello Game
+
+1. Did you attempt to make your computer player very smart -- i.e., do something more clever than just pick a random legal move?
+
+    Yes. I tried to make a prior position list for the computer AI to save the legal moves that make it play the game
+in a more effective way.
+
+2. If so, were you able to accomplish this? Is your computer player as smart as you would like?
+
+    I have accomplished it. When it's the computer player's turn, what it acts is what I expected. 
+
+3. How did you determine which piece to play next? Tell us about your “pick next move” algorithm
+
+    We know that in this game, it is important for a player to place the tiles on the corner of the board as soon as possible,
+in order to have more safe tiles that wouldn't be flipped. 
+    Because of this, I created a list to save the position of the four corner squares of the board. When it's the turn of the computer player, 
+it will get the valid position list of the white tiles. Then, every valid position in the valid position list will be checked if it is one of
+the position of the four corner squares by looping the valid position list to check if it is also in the list of the four corner squares. 
+If so, the position will be saved in the prior list. After the loop, the computer player will pick up a random position from the prior list
+and put down the tile on this position.
+
+4. How often did your computer program beat you, or your friends, or whoever tested it out for you?
+
+    My computer AI's win rate is about 13%.
+
+5. How would you improve it in the future?
+
+    In the future, I want to improve the position strategy for the computer AI by extend the position list to save more possible prior positions,
+and also, the possible prior list would be changed automatically when it is the computer's turn.
+    For example, when the computer AI have placed a tile on the top-left corner, the possible prior list will be changed - it will not only
+have the four corner squares, but also includes all positions on the board edges that include the top-left corner. When placing tiles near
+the corner it have occupied and also on the edges, there will be more safe tiles that wouldn't be flipped for the computer AI.

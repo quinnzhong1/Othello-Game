@@ -1,0 +1,168 @@
+Design and pseudocode for the Othello game_controller
+
+1. 
+Classes: 
+- Tile : represent a single Tile
+- Tiles: represent all tiles that would be put down on the board
+- Board: represent the board
+- GameController: detemine who wins the game and show the result
+- Player: represent the behavior of the human player
+- Computer: represent the behavior of the computer player
+
+Main processing pyde file
+- othello.pyde: run all the codes
+
+2. 
+functions:
+- Tile class:
+    - constructors: 
+        x, y, color, diameter -> x, y, color, diameter
+    - display:
+        Draw the tile
+- Tiles class:
+    - constructors: 
+        position, diameter, rows, columns -> pos, diameter
+        black_count = 2, white_count = 2, count = 4, total_final_count
+        WHITE, BLACK, tiles_list = 8*8 nested list, check_black = True
+        valid_pos = set(), flip_pos = set()
+        add four tiles in tiles_list:
+            formula of one of the tile's position: area = len(pos)-2)/2
+            for row in (area, area+2)
+                for col in (area, area+2)
+                    if row == col
+                        Tile(black) -> tiles_list[row][col]
+                    else
+                        Tile(white) -> tiles_list[row][col]
+    - add_tile(row, col):
+        Add a tile on the correct position
+        if the position in the tiles_list is 0
+            if check_black is True  
+                Tile(black) -> tiles_list[row][col]
+                black_count++
+                check_black = False
+            else
+                Tile(white) -> tiles_list[row][col]
+                white_count++
+                check_black = True
+    - display: 
+        draw each tile in the tiles_list unless it is 0
+    - check_empty:
+        check whether all the positions is filled up(if count != total_final_count)
+    - valid_position:
+        return the valid positions that could be placed a tile
+        if check_black is true:
+            for all 0 in tiles_list
+                for all black tiles:
+                    if x_blank == x_black
+                        if a = |y_black - y_black| >= 1
+                            for all positions between these 2 position
+                                if all positions are white tiles  
+                                    position -> the valid_pos
+                                else
+                                    continue
+                    elif y_blank == y_black
+                        similar to the upper code
+                    elif x_blank - x_black == y_blank - y_black
+                        similar to the upper code
+                    elif x_blank + y_blank == x_black + x_black
+                        similar to the upper code
+        else
+            similar to if check_black is true, but change the tile's color to white
+    - flip_position:
+        return all positions that should be flipped
+        if check_black is false:
+            for all black tiles:
+                flip = set()
+                if x_blank == x_black
+                        if a = |y_black - y_black| >= 1
+                            for all positions between these 2 position
+                                if all positions are white tiles
+                                    position -> flip
+                                    flip_set += flip
+                                else
+                                    break
+                elif y_blank == y_black
+                    similar to the upper code
+                elif x_blank - x_black == y_blank - y_black
+                    similar to the upper code
+                elif x_blank + y_blank == x_black + x_black
+                    similar to the upper code
+        else
+            similar to if check_black is true, but change the tile's color to white
+    - flip_tile:
+        flip all the tiles that should be flipped
+        if check_black is False
+            for all positions in flip_pos
+                Tile(black) -> tiles_list[row][col]
+- Board class:
+    - constructors: 
+        size, rows, columns, diameter -> size, rows, columns, diameter
+        position = a nested list that save all the center positions of all squares on the board
+        player -> player
+        computer -> computer
+        tiles = Tiles
+        full = False
+        tiles.valid_position()
+    - update
+        Update the board when adding tiles until all squares is filled up
+        if tiles.check_black
+            player.put_down_tile()
+        else
+            computer.ai_put_down_tile()
+        if tiles.check_empty is false
+            full = True
+    - display
+        Draw the board lines and the current tiles
+- Player class:
+    - constructors:
+        tiles -> tiles
+    - put_down_tile:
+        player put down a tile
+        tiles.add_tile()
+        tiles.file_position()
+        tiles.flip_tiles()
+        tiles.valid_position()
+- Computer class:
+    import random
+    - constructors:
+        tiles -> tiles
+        prior = set()   
+    - ai_put_down_tile
+        computer ai put down a tile in a correct and effective place
+        self.prior_position()
+        tiles.add_tile(random.choice(prior))
+        tiles.file_position()
+        tiles.flip_tiles()
+        tiles.valid_position()
+        self.prior = set()
+    - prior_position
+        return the priot positions where AI will put down the tile in priority
+        if the blank position is one of the corner squares
+            position -> prior
+        if nothing in prior
+            prior = tiles.valid_pos
+- GameController class
+    - constructors:
+        text_position -> text_position
+        board -> board
+    - update:
+        Detemine who is the winner and print the result when the game is over
+        if board.tiles.black_count > board.tiles.white_count
+            print_text: PLAYER WINS
+        elif board.tiles.black_count < board.tiles.white_count
+            print_text: COMPUTER WINS
+        elif board.tiles.black_count == board.tiles.white_count
+            print_text: TIE
+        print_text: board.tiles.black_count and board.tiles.white_count
+    - print_text:
+        Print the text on the screen with specified fontsize and position
+3.
+- When the user tries to make an illegal move: nothing will happen
+- When the user makes a legal move -> Player.put_down_tile()
+- When its the computers turn -> Computer.ai_put_down_tile()
+- When the game is over (there are no more legal moves) -> GameController.update()
+
+4. to end the game:
+1. no square on the list - end the game
+2. when the player and the computer have no legal moves(no valid position), set a variable to calculate the number
+no legal moves(1, 2). When it is 2, end the game.

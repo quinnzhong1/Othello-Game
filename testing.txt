@@ -1,0 +1,52 @@
+Testing and debugging
+
+Functions I tested for Part 1:
+- Tile class
+    - constructors
+        Tile(50, 50, 0, 80)
+        x == 50
+        y == 50
+        color == 0
+        diameter == 80
+- Tiles class
+    - constructors
+        Tiles([(50,50)], 80, 4, 4)
+        black_count == 2
+        white_count == 2
+        count == 4
+        total_final_count == 16
+        BLACK  == 0
+        WHITE == 225
+        pos == [(50,50)]
+        diameter == 80
+        tiles_tiles have 4 Tiles in central squares(2 black and 2 white)
+        check_black == True
+    - add_tile(50, 50)
+        count == 5
+        The Tile created is black
+    - check_empty
+        return False
+- Board class
+    - constructors
+        Board(100, 4, 4, 80)
+        size == 100
+        rows == 4
+        columns == 4
+        diameter = 80
+        full == False
+    - update
+        full == False
+- GameController class
+    - constructors
+        Board(100, 4, 4, 80)
+        GameController(200, board)
+        board == Board(100, 4, 4, 80)
+        TEXT_POS == 100
+
+
+
+
+
+
+
+
